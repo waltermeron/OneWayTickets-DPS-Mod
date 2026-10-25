@@ -5,6 +5,7 @@ namespace OneWayDps {
         public float opacity=1f, size=1f, x=18f, y=105f;
         public float width=760f, height=668f;
         public bool dpsOnly;
+        public bool separateAuxiliary;
         public int sortMode;
         public int layoutVersion;
         static float Clamp(float value,float low,float high,float fallback) {

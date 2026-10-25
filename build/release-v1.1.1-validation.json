@@ -1,0 +1,10 @@
+{
+  "sha256": "32245BB29440EB334837637DC8308E3CCFE2F8963A5E3297ECE9533E59990290",
+  "steamBuildId": "26195956",
+  "version": "1.1.1",
+  "package": "Extracted source build, tests, update guards and uninstall passed",
+  "runtime": "Combat loaded; no blocking initialization or tick exceptions",
+  "personalData": "Pre-hotfix save, backup save, history and preferences verified",
+  "logicAssertions": 580,
+  "gameVersion": "0.8.0.3"
+}

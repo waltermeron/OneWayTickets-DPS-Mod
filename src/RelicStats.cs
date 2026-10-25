@@ -136,7 +136,7 @@ namespace OneWayDps {
         public static string Format(double value,string unit) {
             double display=unit=="percent"?value/10:unit=="seconds" || unit=="thousandth"?value/1000:value;
             string number=display.ToString("+0.###;-0.###;0",CultureInfo.InvariantCulture);
-            return number+(unit=="percent"?"%":unit=="seconds"?" 秒":unit=="raw"?"（配置值）":"");
+            return number+(unit=="percent"?"%":unit=="seconds"?" 秒":"");
         }
         static Dictionary<string,Spec> CreateSpecs() {
             var d=new Dictionary<string,Spec>();

@@ -8,12 +8,14 @@ namespace OneWayDps {
     public static class Hooks {
         static bool warned;
         static readonly FieldInfo adherentSource=typeof(World.Adherents.Adherent).GetField("_source",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic);
-        public static void Begin() {try{DpsOverlay.Begin();}catch(Exception e){Warn(e);}}
-        public static void End() {DpsOverlay.Active=false;}
+        public static void Begin() {try{RunRecorder.SceneStarting();DamageAttribution.NewRun();DpsOverlay.Begin();}catch(Exception e){Warn(e);}}
+        public static void End() {RunRecorder.SceneEnding();DpsOverlay.Active=false;}
         public static void Tick(WorldContext ctx) {
+            if(DpsOverlay.Active)RunRecorder.Tick(ctx);
             if(DpsOverlay.Active && !ctx.in_safe_area && !ctx.is_in_settlement && !ctx.is_freeze_time) DpsOverlay.Stats.Tick();
         }
         static void Warn(Exception e) {if(!warned){warned=true;Debug.LogWarning("[OneWayDps] "+e);}}
+        public static ITarget AdherentSource(ITarget source){return source is World.Adherents.Adherent && adherentSource!=null?adherentSource.GetValue(source) as ITarget:null;}
         public static Device ResolveWeapon(ITarget source) {
             for(int i=0;i<16 && source!=null;i++) {
                 var d=source as Device; if(d!=null)return d;
@@ -35,16 +37,17 @@ namespace OneWayDps {
             return false;
         }
         public static void Hurt(ITarget target,ITarget source,Attack_Data attack,out Dmg_Data result) {
-            bool eligible=false; int before=0; Device weapon=null;
+            bool eligible=false; int before=0; object weapon=null,auxiliary=null;
             try {
-                eligible=DpsOverlay.Active && source!=null && target!=null && IsPlayerSource(source) && target.Faction==WorldEnum.Faction.opposite;
-                if(eligible){before=Math.Max(0,target.hp);eligible=before>0;if(eligible)weapon=ResolveWeapon(source);}
+                eligible=DpsOverlay.Active && target!=null && (source!=null?IsPlayerSource(source):DamageAttribution.PlayerContext) && target.Faction==WorldEnum.Faction.opposite;
+                if(eligible){before=Math.Max(0,target.hp);eligible=before>0;if(eligible)DamageAttribution.Resolve(source,out weapon,out auxiliary);}
             }catch(Exception e){Warn(e);}
             target.hurt(source,attack,out result);
             try {
                 if(eligible && !result.is_heal && !result.is_miss && !result.is_immune && result.dmg>0) {
                     double loss=Math.Max(0.0,(double)before-Math.Max(0,target.hp));
-                    DpsOverlay.Stats.RecordHit(weapon,Math.Min(loss,result.dmg),result.dmg);
+                    DpsOverlay.Stats.RecordAttributedHit(weapon,auxiliary,Math.Min(loss,result.dmg),result.dmg);
+                    RunRecorder.RecordHit(weapon,auxiliary,Math.Min(loss,result.dmg),result.dmg);
                 }
             }catch(Exception e){Warn(e);}
         }

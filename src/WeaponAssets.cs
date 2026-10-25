@@ -14,11 +14,32 @@ namespace OneWayDps {
     }
     public static class WeaponAssets {
         static readonly Dictionary<uint,WeaponVisual> cache=new Dictionary<uint,WeaponVisual>();
+        static readonly Dictionary<uint,WeaponVisual> relicCache=new Dictionary<uint,WeaponVisual>();
         static readonly Dictionary<int,Color> colors=new Dictionary<int,Color>();
         static readonly WeaponVisual other=new WeaponVisual();
         public static WeaponVisual Get(object key) {
+            var shared=key as SharedDamageSource;
+            if(shared!=null)return new WeaponVisual{Name=shared.Name,Quality="多件奇物共同影响的独立伤害",Color=new Color(.8f,.64f,1f)};
+            var relic=key as World.Relic.Relic;
+            if(relic!=null && relic.desc!=null) {
+                WeaponVisual rv;if(relicCache.TryGetValue(relic.desc.id,out rv))return rv;
+                var rd=relic.desc;rv=new WeaponVisual{Name=Regex.Replace(Localization_Utility.get_localization(rd.name)??rd.name,"<[^>]+>",""),Quality="奇物 · 品质 "+rd.rank,Rank=rd.rank,Color=ReadQualityColor(null,rd.rank)};
+                if(!String.IsNullOrEmpty(rd.portrait))Addressable_Utility.try_load_asset<Sprite>(rd.portrait,out rv.Icon);
+                relicCache.Add(rd.id,rv);return rv;
+            }
             var d=key as Device; if(d==null || d.desc==null)return other;
-            var desc=d.desc; WeaponVisual v;
+            return GetDevice(d.desc);
+        }
+        public static WeaponVisual ForHistory(RunSource source) {
+            try {
+                if(source.Kind=="weapon" || source.Kind=="auxiliary") {device_all desc;if(device_alls.TryGetValue(source.ContentId.ToString(),out desc))return GetDevice(desc);}
+                var v=new WeaponVisual{Name=source.Name,Rank=source.Rank,Color=source.Kind=="effect"?new Color(.8f,.64f,1f):ReadQualityColor(null,source.Rank)};
+                if(source.Kind=="relic"){relic desc;if(relics.TryGetValue(source.ContentId.ToString(),out desc) && !String.IsNullOrEmpty(desc.portrait))Addressable_Utility.try_load_asset<Sprite>(desc.portrait,out v.Icon);}
+                return v;
+            }catch{return new WeaponVisual{Name=source.Name,Rank=source.Rank};}
+        }
+        static WeaponVisual GetDevice(device_all desc) {
+            WeaponVisual v;
             if(cache.TryGetValue(desc.id,out v))return v;
             v=new WeaponVisual(); v.Name=Regex.Replace(Localization_Utility.get_localization(desc.name) ?? desc.name,"<[^>]+>","");
             v.Rank=desc.rank; v.Quality=desc.rank>=100?"特殊品质":"品质 "+desc.rank;

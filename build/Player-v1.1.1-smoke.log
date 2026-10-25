@@ -1,0 +1,563 @@
+Mono path[0] = 'E:/steam/steamapps/common/再再启程 one way tickets/再再启程_Data/Managed'
+Mono config path = 'E:/steam/steamapps/common/再再启程 one way tickets/MonoBleedingEdge/etc'
+[Physics::Module] Initialized MultithreadedJobDispatcher with 19 workers.
+Initialize engine version: 2022.3.17f1c1 (a01dafa986ec)
+[Subsystems] Discovering subsystems at path E:/steam/steamapps/common/再再启程 one way tickets/再再启程_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=1; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28e0)
+    Vendor:   NVIDIA
+    VRAM:     7957 MB
+    Driver:   32.0.15.8142
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.192 seconds
+- Finished resetting the current domain, in  0.001 seconds
+<RI> Initializing input.
+New input system (experimental) initialized
+Using Windows.Gaming.Input
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 2.602600 ms
+[Letterbox] bootstrap (BeforeSceneLoad)
+[Steam] SteamAPI.Init() 失败。请检查：steam_appid.txt 是否在工程根目录、Steam 是否已登录、该账号是否有此 App 的权限。
+[Analytics] 埋点已关闭（Config.enable_analytics = false），不启动数据采集
+[Letterbox] scene=Main screen=2560x1440 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.405300 ms
+Unloading 32 unused Assets to reduce memory usage. Loaded Objects now: 4140.
+Total: 3.079200 ms (FindLiveObjects: 0.158000 ms CreateObjectMapping: 0.090400 ms MarkObjects: 2.714300 ms  DeleteObjects: 0.116100 ms)
+
+[Letterbox] scene=LoadingScene screen=2560x1440 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+Unloading 6 Unused Serialized files (Serialized files now loaded: 1)
+场景加载成功！
+UnloadTime: 8.551300 ms
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 4956.
+Total: 3.793200 ms (FindLiveObjects: 0.213700 ms CreateObjectMapping: 0.097100 ms MarkObjects: 3.444600 ms  DeleteObjects: 0.037400 ms)
+
+[OneWayDps] Loaded v1.1.1 | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact; F6 auxiliary sources; F7 history.
+E:\steam\steamapps\common\再再启程 one way tickets\SaveData\save_00.dat
+[Letterbox] scene=InitScene screen=2560x1440 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+Unloading 7 Unused Serialized files (Serialized files now loaded: 6)
+UnloadTime: 3.339500 ms
+Unloading 93 unused Assets to reduce memory usage. Loaded Objects now: 52372.
+Total: 13.936800 ms (FindLiveObjects: 3.423400 ms CreateObjectMapping: 1.158000 ms MarkObjects: 9.008100 ms  DeleteObjects: 0.347000 ms)
+
+E:\steam\steamapps\common\再再启程 one way tickets\SaveData\save_00.dat
+[Letterbox] scene=CampScene screen=2560x1440 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+场景加载成功！
+[Steam] 成就已排队（Steam 未就绪）：GAME_FIRST_DEPART
+尝试进入世界: 4008
+[Steam] 成就已排队（Steam 未就绪）：GAME_FIRST_LAKE
+Unloading 3 Unused Serialized files (Serialized files now loaded: 10)
+UnloadTime: 47.180300 ms
+[Letterbox] scene=LoadingScene screen=2560x1440 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+场景加载成功！
+Unloading 6776 unused Assets to reduce memory usage. Loaded Objects now: 5376.
+Total: 12.040400 ms (FindLiveObjects: 0.412900 ms CreateObjectMapping: 0.361500 ms MarkObjects: 6.623100 ms  DeleteObjects: 4.642500 ms)
+
+Unloading 8 Unused Serialized files (Serialized files now loaded: 10)
+UnloadTime: 0.589000 ms
+========  已加载世界：4008  ========
+========  已加载关卡：4008_0  ========
+420801
+========  已加载子场景：420801，序列：0/17，场景类型：init  ========
+Unloading 32 unused Assets to reduce memory usage. Loaded Objects now: 11580.
+Total: 8.768800 ms (FindLiveObjects: 0.642500 ms CreateObjectMapping: 0.226500 ms MarkObjects: 7.744500 ms  DeleteObjects: 0.154700 ms)
+
+The referenced script on this Behaviour (Game Object 'UiCaravanCamera') is missing!
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+The referenced script on this Behaviour (Game Object 'UiCaravanCamera') is missing!
+The referenced script on this Behaviour (Game Object 'UiCaravanCamera') is missing!
+slot_pos : 0.009177214,0.009372635
+caravan_pos:(-15.00, 4.00)
+slot_pos : -0.683,0.929
+caravan_pos:(-15.00, 4.00)
+slot_pos : -0.829,0.18
+caravan_pos:(-15.00, 4.00)
+slot_pos : 0.236,0.779
+caravan_pos:(-15.00, 4.00)
+slot_pos : 1.122,-0.024
+caravan_pos:(-15.00, 4.00)
+DeviceUiPanelPos not found for slot_name: device_slot_wheel
+pd init
+PlayWeatherSFX: clip is null
+========  已加载场景音乐：bgm_8a  ========
+科技参数未配置，科技id：650008
+科技参数未配置，科技id：650300
+科技参数未配置，科技id：650510
+科技参数未配置，科技id：650511
+科技参数未配置，科技id：650520
+科技参数未配置，科技id：651100
+科技参数未配置，科技id：651200
+科技参数未配置，科技id：651300
+科技参数未配置，科技id：651400
+科技参数未配置，科技id：653000
+科技脚本未配置，科技id：655300
+科技脚本未配置，科技id：655400
+科技参数未配置，科技id：650000
+科技参数未配置，科技id：652000
+科技参数未配置，科技id：650010
+科技参数未配置，科技id：650030
+科技参数未配置，科技id：650070
+科技参数未配置，科技id：650050
+科技参数未配置，科技id：650080
+科技参数未配置，科技id：650060
+科技参数未配置，科技id：650071
+科技参数未配置，科技id：650020
+科技参数未配置，科技id：650040
+科技参数未配置，科技id：650061
+科技参数未配置，科技id：650051
+科技参数未配置，科技id：650041
+科技参数未配置，科技id：650021
+科技参数未配置，科技id：650011
+科技参数未配置，科技id：650031
+科技参数未配置，科技id：650072
+科技参数未配置，科技id：650081
+科技参数未配置，科技id：650062
+[Letterbox] scene=TestScene screen=2560x1440 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+[OneWayDps] Weapon 12111020 工业齿轮 rank=100 icon=True color=EBBD89
+[OneWayDps] Weapon 13111011 镇暴钉锤 rank=1 icon=True color=ADEB67
+[OneWayDps] Weapon 13211021 镇暴霰弹枪 rank=1 icon=True color=ADEB67
+[OneWayDps] Weapon 13601022 金属铲斗 rank=2 icon=True color=9BBBEB
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9100001_2018141，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9100002_2018141，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9100003_2018141，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9100004_2018141，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9110000_2018142，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9120001_2018142，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9120002_2018142，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9120003_2018142，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9130000_2018143，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9200001_2018151，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9200002_2018151，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9200003_2018151，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9200004_2018151，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9210000_2018152，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9220001_2018152，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9220002_2018152，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9220003_2018152，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9230000_2018153，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990001_201830，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990002_201831，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990003_201832，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990004_201833，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990005_201834，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990006_201835，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990007_201836，进度0.001005688 ========
+======== 怪物组加载开始，序号add_premanent_enemy_req_42080000_9990008_201837，进度0.001005688 ========
+======== 怪物组加载开始，序号add_enemy_req_42080020_1010000_201803，进度0.1221563 ========
+======== 怪物组加载开始，序号add_enemy_req_42080020_1020000_201803，进度0.1221563 ========
+======== 怪物组加载开始，序号add_enemy_req_42080020_1030000_201803，进度0.1221563 ========
+======== 怪物组加载开始，序号add_enemy_req_42080020_1040000_201803，进度0.1221563 ========
+======== 怪物组加载结束，序号add_enemy_req_42080020_1010000_201803，进度0.8791175 ========
+======== 怪物组加载结束，序号add_enemy_req_42080020_1020000_201803，进度0.8791175 ========
+======== 怪物组加载结束，序号add_enemy_req_42080020_1030000_201803，进度0.8791175 ========
+======== 怪物组加载结束，序号add_enemy_req_42080020_1040000_201803，进度0.8791175 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9100001_2018141，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9100002_2018141，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9100003_2018141，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9100004_2018141，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9110000_2018142，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9120001_2018142，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9120002_2018142，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9120003_2018142，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9130000_2018143，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9200001_2018151，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9200002_2018151，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9200003_2018151，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9200004_2018151，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9210000_2018152，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9220001_2018152，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9220002_2018152，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9220003_2018152，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9230000_2018153，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990001_201830，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990002_201831，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990003_201832，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990004_201833，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990005_201834，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990006_201835，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990007_201836，进度1 ========
+======== 怪物组加载结束，序号add_premanent_enemy_req_42080000_9990008_201837，进度1 ========
+商店数据已清空
+生成角色商店
+生成设备商店
+businnes
+10801
+False
+13201051
+13101070
+13201160
+生成精英遗物商店
+可加载奇遇：45110100
+不可加载奇遇：45110200
+不可加载奇遇：45110300
+不可加载奇遇：45120400
+已连续普通战斗1次
+420802
+notify_message: 到达灵界石碑后，核心的能量恢复了<sprite name="nmb_normal_0" tint=1><sprite name="nmb_normal_12" tint=1>
+Character:15000 EnterSafeArea
+coma 999
+Character:15201 EnterSafeArea
+notify_message: <color=#C57C4C>知春</color>在经过一番交涉后，使<color=#5faacf>[神秘行商]</color>的价格降低了19.30%
+coma 999
+Character:15307 EnterSafeArea
+coma 999
+E:\steam\steamapps\common\再再启程 one way tickets\SaveData\save_00.dat
+E:\steam\steamapps\common\再再启程 one way tickets\SaveData\save_00_backup.dat
+存档：安全区
+Setting up 20 worker threads for Enlighten.
+Releasing render texture that is set as Camera.targetTexture!
+Memory Statistics:
+[ALLOC_TEMP_TLS] TLS Allocator
+  StackAllocators : 
+    [ALLOC_TEMP_MAIN]
+      Peak usage frame count: [2.0 KB-4.0 KB]: 35 frames, [4.0 KB-8.0 KB]: 498 frames, [8.0 KB-16.0 KB]: 1 frames, [16.0 KB-32.0 KB]: 6853 frames, [32.0 KB-64.0 KB]: 5506 frames, [64.0 KB-128.0 KB]: 12916 frames, [128.0 KB-256.0 KB]: 5953 frames, [0.5 MB-1.0 MB]: 3 frames, [1.0 MB-2.0 MB]: 2 frames, [2.0 MB-4.0 MB]: 2 frames, [4.0 MB-8.0 MB]: 2 frames
+      Initial Block Size 4.0 MB
+      Current Block Size 6.0 MB
+      Peak Allocated Bytes 6.0 MB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 4]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.PreloadManager]
+      Initial Block Size 256.0 KB
+      Current Block Size 0.5 MB
+      Peak Allocated Bytes 510.0 KB
+      Overflow Count 88
+    [ALLOC_TEMP_Background Job.worker 3]
+      Initial Block Size 32.0 KB
+      Current Block Size 44.0 KB
+      Peak Allocated Bytes 41.2 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 11]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 16]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 29.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 7]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 6]
+      Initial Block Size 32.0 KB
+      Current Block Size 36.0 KB
+      Peak Allocated Bytes 32.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_CloudJob.worker 0] x 2
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 2.3 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 12]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 2]
+      Initial Block Size 32.0 KB
+      Current Block Size 36.0 KB
+      Peak Allocated Bytes 32.1 KB
+      Overflow Count 2
+    [ALLOC_TEMP_Background Job.worker 10]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 15]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 5]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 8]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 13]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_AssetGarbageCollectorHelper] x 19
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 138 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 0]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 6]
+      Initial Block Size 256.0 KB
+      Current Block Size 336.0 KB
+      Peak Allocated Bytes 180.2 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 8]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 63.9 KB
+      Overflow Count 0
+    [ALLOC_TEMP_HIDInput]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 10.8 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 14]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_BatchDeleteObjects]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 11]
+      Initial Block Size 256.0 KB
+      Current Block Size 364.0 KB
+      Peak Allocated Bytes 194.9 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 15]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 27.6 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 9]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 0]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 14]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 29.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 4]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 13]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 1]
+      Initial Block Size 32.0 KB
+      Current Block Size 44.0 KB
+      Peak Allocated Bytes 41.3 KB
+      Overflow Count 0
+    [ALLOC_TEMP_EnlightenWorker] x 20
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 1]
+      Initial Block Size 256.0 KB
+      Current Block Size 336.0 KB
+      Peak Allocated Bytes 180.2 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 3]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 5]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 12]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_UnityGfxDeviceWorker]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 22.3 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 2]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 45.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 10]
+      Initial Block Size 256.0 KB
+      Current Block Size 356.0 KB
+      Peak Allocated Bytes 189.4 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 7]
+      Initial Block Size 256.0 KB
+      Current Block Size 348.0 KB
+      Peak Allocated Bytes 186.4 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 17]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 29.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 9]
+      Initial Block Size 256.0 KB
+      Current Block Size 336.0 KB
+      Peak Allocated Bytes 180.2 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 18]
+      Initial Block Size 256.0 KB
+      Current Block Size 336.0 KB
+      Peak Allocated Bytes 180.2 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.AsyncRead]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 43.5 KB
+      Overflow Count 0
+[ALLOC_DEFAULT] Dual Thread Allocator
+  Peak main deferred allocation count 9825
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 11 Subsections = 11264 buckets. Failed count: 821684
+        32B: 42 Subsections = 21504 buckets. Failed count: 128152
+        48B: 34 Subsections = 11605 buckets. Failed count: 5039522
+        64B: 34 Subsections = 8704 buckets. Failed count: 68342
+        80B: 42 Subsections = 8601 buckets. Failed count: 80962
+        96B: 33 Subsections = 5632 buckets. Failed count: 62040
+        112B: 21 Subsections = 3072 buckets. Failed count: 9818
+        128B: 39 Subsections = 4992 buckets. Failed count: 35047
+    [ALLOC_DEFAULT_MAIN]
+      Peak usage frame count: [64.0 MB-128.0 MB]: 504 frames, [128.0 MB-256.0 MB]: 31267 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 7
+      Peak Allocated memory 167.6 MB
+      Peak Large allocation bytes 73.6 MB
+    [ALLOC_DEFAULT_THREAD]
+      Peak usage frame count: [16.0 MB-32.0 MB]: 19020 frames, [32.0 MB-64.0 MB]: 12673 frames, [64.0 MB-128.0 MB]: 78 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 2
+      Peak Allocated memory 68.7 MB
+      Peak Large allocation bytes 53.6 MB
+[ALLOC_TEMP_JOB_1_FRAME]
+  Initial Block Size 2.0 MB
+  Used Block Count 0
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_2_FRAMES]
+  Initial Block Size 2.0 MB
+  Used Block Count 0
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_4_FRAMES (JobTemp)]
+  Initial Block Size 2.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_ASYNC (Background)]
+  Initial Block Size 1.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_GFX] Dual Thread Allocator
+  Peak main deferred allocation count 2
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 11 Subsections = 11264 buckets. Failed count: 821684
+        32B: 42 Subsections = 21504 buckets. Failed count: 128152
+        48B: 34 Subsections = 11605 buckets. Failed count: 5039522
+        64B: 34 Subsections = 8704 buckets. Failed count: 68342
+        80B: 42 Subsections = 8601 buckets. Failed count: 80962
+        96B: 33 Subsections = 5632 buckets. Failed count: 62040
+        112B: 21 Subsections = 3072 buckets. Failed count: 9818
+        128B: 39 Subsections = 4992 buckets. Failed count: 35047
+    [ALLOC_GFX_MAIN]
+      Peak usage frame count: [32.0 KB-64.0 KB]: 536 frames, [64.0 KB-128.0 KB]: 4 frames, [128.0 KB-256.0 KB]: 16291 frames, [256.0 KB-0.5 MB]: 12792 frames, [0.5 MB-1.0 MB]: 6 frames, [1.0 MB-2.0 MB]: 2141 frames, [2.0 MB-4.0 MB]: 1 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 1
+      Peak Allocated memory 2.4 MB
+      Peak Large allocation bytes 0 B
+    [ALLOC_GFX_THREAD]
+      Peak usage frame count: [32.0 KB-64.0 KB]: 489 frames, [1.0 MB-2.0 MB]: 1 frames, [2.0 MB-4.0 MB]: 2 frames, [4.0 MB-8.0 MB]: 1 frames, [8.0 MB-16.0 MB]: 1 frames, [16.0 MB-32.0 MB]: 20488 frames, [32.0 MB-64.0 MB]: 2390 frames, [64.0 MB-128.0 MB]: 8399 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 5
+      Peak Allocated memory 65.3 MB
+      Peak Large allocation bytes 0 B
+[ALLOC_CACHEOBJECTS] Dual Thread Allocator
+  Peak main deferred allocation count 368
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 11 Subsections = 11264 buckets. Failed count: 821684
+        32B: 42 Subsections = 21504 buckets. Failed count: 128152
+        48B: 34 Subsections = 11605 buckets. Failed count: 5039522
+        64B: 34 Subsections = 8704 buckets. Failed count: 68342
+        80B: 42 Subsections = 8601 buckets. Failed count: 80962
+        96B: 33 Subsections = 5632 buckets. Failed count: 62040
+        112B: 21 Subsections = 3072 buckets. Failed count: 9818
+        128B: 39 Subsections = 4992 buckets. Failed count: 35047
+    [ALLOC_CACHEOBJECTS_MAIN]
+      Peak usage frame count: [8.0 MB-16.0 MB]: 31771 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 4
+      Peak Allocated memory 14.2 MB
+      Peak Large allocation bytes 4.9 MB
+    [ALLOC_CACHEOBJECTS_THREAD]
+      Peak usage frame count: [64.0 KB-128.0 KB]: 488 frames, [128.0 KB-256.0 KB]: 7 frames, [8.0 MB-16.0 MB]: 9 frames, [16.0 MB-32.0 MB]: 5409 frames, [32.0 MB-64.0 MB]: 25772 frames, [64.0 MB-128.0 MB]: 86 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 12
+      Peak Allocated memory 74.5 MB
+      Peak Large allocation bytes 34.2 MB
+[ALLOC_TYPETREE] Dual Thread Allocator
+  Peak main deferred allocation count 2
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 11 Subsections = 11264 buckets. Failed count: 821684
+        32B: 42 Subsections = 21504 buckets. Failed count: 128152
+        48B: 34 Subsections = 11605 buckets. Failed count: 5039522
+        64B: 34 Subsections = 8704 buckets. Failed count: 68342
+        80B: 42 Subsections = 8601 buckets. Failed count: 80962
+        96B: 33 Subsections = 5632 buckets. Failed count: 62040
+        112B: 21 Subsections = 3072 buckets. Failed count: 9818
+        128B: 39 Subsections = 4992 buckets. Failed count: 35047
+    [ALLOC_TYPETREE_MAIN]
+      Peak usage frame count: [8.0 KB-16.0 KB]: 502 frames, [16.0 KB-32.0 KB]: 7898 frames, [32.0 KB-64.0 KB]: 23371 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 1
+      Peak Allocated memory 40.4 KB
+      Peak Large allocation bytes 0 B
+    [ALLOC_TYPETREE_THREAD]
+      Peak usage frame count: [0-1.0 KB]: 498 frames, [1.0 KB-2.0 KB]: 1 frames, [8.0 KB-16.0 KB]: 2 frames, [16.0 KB-32.0 KB]: 1 frames, [32.0 KB-64.0 KB]: 2 frames, [0.5 MB-1.0 MB]: 20478 frames, [2.0 MB-4.0 MB]: 10789 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 2
+      Peak Allocated memory 3.8 MB
+      Peak Large allocation bytes 0 B

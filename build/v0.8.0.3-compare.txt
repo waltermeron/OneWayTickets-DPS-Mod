@@ -1,0 +1,140 @@
+Original MVID: ea064487-7655-4c80-8cf9-c1d5a0d18244; new MVID: 0cc85e76-514e-4b6e-a444-8f460e5a723c
+Type counts: 1523 -> 1525
+Added type: World.World_Console_Code/<>c__DisplayClass50_0
+Added type: World.WarningDelSave
+FIELDS World.Widgets.Widget_Blower_Context: AutoCodes.device_wheel World.Widgets.Widget_Blower_Context::wheel_desc, System.Int32 World.Widgets.Widget_Blower_Context::trigger_ticks, System.Single World.Widgets.Widget_Blower_Context::lever_up_rate, System.Single World.Widgets.Widget_Blower_Context::lever_acc_bonus, System.Boolean World.Widgets.Widget_Blower_Context::m_is_blowering, System.Int32 World.Widgets.Widget_Blower_Context::lever_up_cd
+IL System.Void World.Widgets.Widget_Blower_Context::tick()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: stloc.0
+IL_0006: ldarg.0
+IL_0007: ldfld System.Boolean World.Widgets.Widget_Blower_Context::m_is_blowering
+IL_000c: brfalse.s IL_0014
+IL_000e: ldarg.0
+IL_000f: call System.Void World.Widgets.Widget_Blower_Context::notify_on_blowering()
+IL_0014: ldloc.0
+IL_0015: ldflda System.Single World.WorldContext::driving_lever
+IL_001a: stloc.1
+IL_001b: ldloc.0
+IL_001c: ldflda UnityEngine.Vector2 World.WorldContext::caravan_velocity
+IL_0021: ldflda System.Single UnityEngine.Vector2::x
+IL_0026: stloc.2
+IL_0027: ldarg.0
+IL_0028: ldarg.0
+IL_0029: ldarg.0
+IL_002a: ldfld System.Int32 World.Widgets.Widget_Blower_Context::lever_up_cd
+IL_002f: ldc.i4.1
+IL_0030: sub
+IL_0031: stloc.3
+IL_0032: ldloc.3
+IL_0033: stfld System.Int32 World.Widgets.Widget_Blower_Context::lever_up_cd
+IL_0038: ldloc.3
+IL_0039: ldc.i4.0
+IL_003a: call System.Int32 UnityEngine.Mathf::Max(System.Int32,System.Int32)
+IL_003f: stfld System.Int32 World.Widgets.Widget_Blower_Context::lever_up_cd
+IL_0044: ldloc.0
+IL_0045: ldfld World.WorldEnum/EN_caravan_status_acc World.WorldContext::caravan_status_acc
+IL_004a: ldc.i4.1
+IL_004b: bne.un.s IL_004e
+IL_004d: ret
+IL_004e: ldloc.1
+IL_004f: ldloc.1
+IL_0050: ldind.r4
+IL_0051: ldloc.0
+IL_0052: ldfld AutoCodes.device_wheel World.WorldContext::r_wheel
+IL_0057: ldfld System.Single AutoCodes.device_wheel::power
+IL_005c: ldc.r4 2
+IL_0061: ldloc.1
+IL_0062: ldind.r4
+IL_0063: sub
+IL_0064: ldc.r4 1
+IL_0069: call System.Single UnityEngine.Mathf::Max(System.Single,System.Single)
+IL_006e: mul
+IL_006f: ldsfld Commons.Config Commons.Config::current
+IL_0074: ldfld System.Single Commons.Config::blower_low_compensation
+IL_0079: mul
+IL_007a: ldc.r4 1
+IL_007f: ldloc.0
+IL_0080: ldfld System.Single World.WorldContext::brake_lever_output
+IL_0085: sub
+IL_0086: mul
+IL_0087: add
+IL_0088: stind.r4
+IL_0089: ldloc.1
+IL_008a: ldind.r4
+IL_008b: ldc.r4 1
+IL_0090: ble.un.s IL_00c0
+IL_0092: ldloc.1
+IL_0093: ldloc.1
+IL_0094: ldind.r4
+IL_0095: ldloc.2
+IL_0096: ldind.r4
+IL_0097: ldloc.0
+IL_0098: ldfld System.Single World.WorldContext::total_weight
+IL_009d: mul
+IL_009e: ldc.r4 0.001
+IL_00a3: mul
+IL_00a4: ldarg.0
+IL_00a5: call System.Single World.Widgets.Widget_Blower_Context::get_wheel_blower_decline()
+IL_00aa: mul
+IL_00ab: ldc.r4 1
+IL_00b0: call System.Single UnityEngine.Mathf::Min(System.Single,System.Single)
+IL_00b5: ldloc.1
+IL_00b6: ldind.r4
+IL_00b7: ldc.r4 1
+IL_00bc: sub
+IL_00bd: mul
+IL_00be: sub
+IL_00bf: stind.r4
+IL_00c0: ret
+Added type: World.Projectiles.Projectile/<>c__DisplayClass83_0
+Added type: World.Projectiles.Projectile/<>c__DisplayClass83_1
+Added type: World.Projectiles.Projectile/<>c__DisplayClass85_0
+Added type: World.Projectiles.Projectile/<>c__DisplayClass86_0
+Added type: World.Enemys.BT.BT_Dungeon_Elite_Worm/<>c__DisplayClass45_0
+Added type: World.Enemys.BT.BT_Dungeon_Elite_Worm/<>c__DisplayClass45_1
+Added type: World.Enemys.BT.BT_Dungeon_Elite_Worm/<>c__DisplayClass48_0
+FIELDS World.Caravans.CaravanHoveringInfo: UnityEngine.GameObject World.Caravans.CaravanHoveringInfo::hovering_info, TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_name, TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_hp, TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_def, TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_weight
+IL System.Void World.Caravans.CaravanHoveringInfo::Init()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "CaravanMgr"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Caravans.CaravanMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: ldfld World.Caravans.Caravan World.Caravans.CaravanMgr::cell
+IL_0018: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_001d: stloc.1
+IL_001e: ldarg.0
+IL_001f: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_name
+IL_0024: ldloc.1
+IL_0025: ldfld System.String AutoCodes.caravan_body::name
+IL_002a: call System.String Commons.Localization_Utility::get_localization(System.String)
+IL_002f: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0034: ldarg.0
+IL_0035: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_hp
+IL_003a: ldstr "耐久: "
+IL_003f: ldloc.1
+IL_0040: ldflda System.Int32 AutoCodes.caravan_body::hp
+IL_0045: call System.String System.Int32::ToString()
+IL_004a: call System.String System.String::Concat(System.String,System.String)
+IL_004f: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0054: ldarg.0
+IL_0055: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_def
+IL_005a: ldstr "护甲: "
+IL_005f: ldloc.1
+IL_0060: ldflda System.Int32 AutoCodes.caravan_body::def
+IL_0065: call System.String System.Int32::ToString()
+IL_006a: call System.String System.String::Concat(System.String,System.String)
+IL_006f: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0074: ldarg.0
+IL_0075: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanHoveringInfo::caravan_weight
+IL_007a: ldstr "重量: "
+IL_007f: ldloc.1
+IL_0080: ldflda System.Int32 AutoCodes.caravan_body::weight
+IL_0085: call System.String System.Int32::ToString()
+IL_008a: ldstr " kg"
+IL_008f: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_0094: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0099: ret
+Added type: <PrivateImplementationDetails>/__StaticArrayInitTypeSize=42858
+Added type: <PrivateImplementationDetails>/__StaticArrayInitTypeSize=64868

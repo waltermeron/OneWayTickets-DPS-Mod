@@ -6,12 +6,13 @@ using UnityEngine;
 using World;
 using World.Devices;
 namespace OneWayDps {
-    public sealed class DpsOverlay : MonoBehaviour {
+    public sealed partial class DpsOverlay : MonoBehaviour {
         public static bool Active;
         public static readonly CombatStats Stats=new CombatStats();
         static DpsOverlay instance;
         bool visible=true,renderCompact; int view,rangeIndex; readonly int[] ranges={60,120,30};
         int selected=-1; bool appearanceOpen,preferencesDirty; float nextRefresh,saveAt;
+        float vehicleSpeed; bool hasVehicleSpeed;
         int gesture; Vector2 lastPointer;
         HudPreferences preferences=new HudPreferences();
         const float AppearanceHeight=96;
@@ -29,14 +30,21 @@ namespace OneWayDps {
         static readonly Color bg=new Color(.045f,.062f,.09f,.96f), card=new Color(.09f,.12f,.16f,.97f), muted=new Color(.57f,.65f,.73f), ink=new Color(.91f,.95f,.98f), accent=new Color(.32f,.94f,.76f);
         public static void Begin() {
             Stats.NewRun(); Active=true;
-            if(instance==null) {
-                var obj=new GameObject("OneWayDpsOverlay");DontDestroyOnLoad(obj);instance=obj.AddComponent<DpsOverlay>();instance.LoadPreferences();
-                Debug.Log("[OneWayDps] Loaded v1.0.0 | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact.");
-            }
+            Boot();
+            Stats.SeparateAuxiliary=instance.preferences.separateAuxiliary;
             instance.visuals.Clear();instance.selected=-1;instance.nextRefresh=0;
         }
+        public static void Boot() {
+            if(instance==null) {
+                var obj=new GameObject("OneWayDpsOverlay");DontDestroyOnLoad(obj);instance=obj.AddComponent<DpsOverlay>();instance.LoadPreferences();
+                Stats.SeparateAuxiliary=instance.preferences.separateAuxiliary;
+                Debug.Log("[OneWayDps] Loaded v1.1.1 | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact; F6 auxiliary sources; F7 history.");
+            }
+        }
         void Update() {
+            RunRecorder.Poll();
             if(preferencesDirty && Time.unscaledTime>=saveAt)SavePreferences();
+            hasVehicleSpeed=Active && VehicleSpeed.TryRead(out vehicleSpeed);
             if(!Active || Time.unscaledTime<nextRefresh)return;
             nextRefresh=Time.unscaledTime+1f;
             try {
@@ -45,7 +53,7 @@ namespace OneWayDps {
                     equipped.Clear();
                     foreach(var slot in mgr.slots_device) {
                         var d=slot.slot_device;
-                        if(d!=null && d.faction==WorldEnum.Faction.player){var entry=Stats.Register(d);entry.Slot=slot._name;entry.IsWheel=d.desc!=null && d.desc.device_type!=null && d.desc.device_type.value==Foundations.Excels.Device_Type.EN_Device_Type.Wheel;equipped.Add(d);}
+                        if(d!=null && d.faction==WorldEnum.Faction.player){var entry=Stats.Register(d);entry.Slot=slot._name;entry.IsAuxiliary=DamageAttribution.IsSupport(d);entry.IsWheel=d.desc!=null && d.desc.device_type!=null && d.desc.device_type.value==Foundations.Excels.Device_Type.EN_Device_Type.Wheel;equipped.Add(d);}
                     }
                 }
                 if(mgr!=null)Stats.PruneUnseen(equipped);
@@ -68,15 +76,18 @@ namespace OneWayDps {
             signature=new GUIStyle(normal);signature.alignment=TextAnchor.UpperRight;signature.fontStyle=FontStyle.Bold;
         }
         void OnGUI() {
-            if(!Active){ReleaseGesture();return;}
             Event input=Event.current;
             if(input.type==EventType.KeyDown) {
-                if(input.keyCode==KeyCode.F1){view=(view+1)%3;preferences.dpsOnly=false;ReleaseInput();DirtyPreferences();input.Use();}
+                if(input.keyCode==KeyCode.F7){ToggleHistory();ReleaseInput();input.Use();}
+                else if(input.keyCode==KeyCode.F1 && Active){view=(view+1)%4;historyOpen=view==3;preferences.dpsOnly=false;ReleaseInput();DirtyPreferences();input.Use();}
                 else if(input.keyCode==KeyCode.F3){visible=!visible;ReleaseInput();input.Use();}
-                else if(input.keyCode==KeyCode.F4){Stats.Reset();input.Use();}
+                else if(input.keyCode==KeyCode.F4 && Active){Stats.Reset();input.Use();}
                 else if(input.keyCode==KeyCode.F2){rangeIndex=(rangeIndex+1)%ranges.Length;input.Use();}
-                else if(input.keyCode==KeyCode.F5){preferences.dpsOnly=!preferences.dpsOnly;appearanceOpen=false;visible=true;ReleaseInput();DirtyPreferences();input.Use();}
+                else if(input.keyCode==KeyCode.F5 && Active && view!=3){preferences.dpsOnly=!preferences.dpsOnly;appearanceOpen=false;visible=true;ReleaseInput();DirtyPreferences();input.Use();}
+                else if(input.keyCode==KeyCode.F6){preferences.separateAuxiliary=!preferences.separateAuxiliary;Stats.SeparateAuxiliary=preferences.separateAuxiliary;selected=-1;chartKey=null;ReleaseInput();DirtyPreferences();input.Use();}
             }
+            if(view==3)appearanceOpen=false;
+            if(!Active && (!historyOpen || !visible)){ReleaseGesture();DrawHistoryLauncher();return;}
             if(!visible)return;if(normal==null)InitStyle();
             rows.Clear();foreach(var entry in Stats.Entries)if(entry.Visible)rows.Add(entry);
             rows.Sort(delegate(CombatStats.Entry a,CombatStats.Entry b){int c=Stats.SortValue(b,preferences.sortMode).CompareTo(Stats.SortValue(a,preferences.sortMode));return c!=0?c:a.Id.CompareTo(b.Id);});
@@ -84,7 +95,7 @@ namespace OneWayDps {
             try {
                 // Position and dimensions never affect the screen's fixed display scale.
                 GUI.matrix=Matrix4x4.identity;
-                renderCompact=preferences.dpsOnly;
+                renderCompact=preferences.dpsOnly && view!=3;
                 HudLayout.Constrain(preferences,Screen.width,Screen.height,renderCompact);
                 float scale=HudLayout.ScreenScale(Screen.width,Screen.height);
                 HandleWindowGesture(scale);
@@ -135,8 +146,10 @@ namespace OneWayDps {
         WeaponVisual Visual(CombatStats.Entry e) {WeaponVisual v;return visuals.TryGetValue(e.Id,out v)?v:new WeaponVisual{Name="加载武器信息…"};}
         void DrawPanel(int id) {
             Fill(new Rect(3,5,panel.width,panel.height),new Color(0,0,0,.3f));Fill(new Rect(0,0,panel.width,panel.height),bg);Fill(new Rect(0,0,panel.width,3),accent);
-            GUI.Label(new Rect(18,13,panel.width-180,28),"战斗分析",bold);
-            if(Btn(new Rect(panel.width-146,12,130,30),appearanceOpen?"收起窗口设置":"窗口设置",appearanceOpen)) {
+            GUI.Label(new Rect(18,13,120,28),view==3?"历史战绩":"战斗分析",bold);
+            GUI.Label(new Rect(142,18,panel.width-298,24),(view==3 && historySelected==""?"最近一局 · ":"")+(Stats.SeparateAuxiliary?"辅助伤害：分别统计":"辅助伤害：合并武器"),small);
+            if(Btn(new Rect(panel.width-146,12,130,30),view==3?"关闭历史":appearanceOpen?"收起窗口设置":"窗口设置",appearanceOpen && view!=3)) {
+                if(view==3){ToggleHistory();return;}
                 if(renderCompact){preferences.dpsOnly=false;appearanceOpen=true;DirtyPreferences();}
                 else appearanceOpen=!appearanceOpen;
             }
@@ -156,25 +169,38 @@ namespace OneWayDps {
             GUI.color=old;
         }
         void DrawMetrics() {
-            float metricWidth=(panel.width-32)/4;
+            float metricWidth=(panel.width-32)/5;
             Fill(new Rect(16,52,panel.width-32,73),card);
-            GUI.Label(new Rect(28,58,metricWidth-16,42),Stats.Total.Dps.ToString("N1"),big);
+            MetricValue(new Rect(28,58,metricWidth-16,42),Stats.Total.Dps.ToString("N1"),big);
             GUI.Label(new Rect(28,99,metricWidth-16,20),"实时 DPS",small);
-            GUI.Label(new Rect(28+metricWidth,62,metricWidth-16,26),Stats.GlobalDps.ToString("N1"),bold);GUI.Label(new Rect(28+metricWidth,96,metricWidth-16,22),"全局 DPS",small);
-            GUI.Label(new Rect(28+metricWidth*2,62,metricWidth-16,26),Stats.Total.Total.ToString("N0"),bold);GUI.Label(new Rect(28+metricWidth*2,96,metricWidth-16,22),"累计伤害",small);
-            GUI.Label(new Rect(28+metricWidth*3,62,metricWidth-16,26),Stats.AverageDps.ToString("N1"),bold);GUI.Label(new Rect(28+metricWidth*3,96,metricWidth-16,22),"平均 DPS",small);
+            MetricValue(new Rect(28+metricWidth,62,metricWidth-16,26),Stats.GlobalDps.ToString("N1"),bold);GUI.Label(new Rect(28+metricWidth,96,metricWidth-16,22),"全局 DPS",small);
+            MetricValue(new Rect(28+metricWidth*2,62,metricWidth-16,26),Stats.Total.Total.ToString("N0"),bold);GUI.Label(new Rect(28+metricWidth*2,96,metricWidth-16,22),"累计伤害",small);
+            MetricValue(new Rect(28+metricWidth*3,62,metricWidth-16,26),Stats.AverageDps.ToString("N1"),bold);GUI.Label(new Rect(28+metricWidth*3,96,metricWidth-16,22),"平均 DPS",small);
+            MetricValue(new Rect(28+metricWidth*4,62,metricWidth-16,26),hasVehicleSpeed?vehicleSpeed.ToString("N1"):"--",bold);
+            GUI.Label(new Rect(28+metricWidth*4,96,metricWidth-16,22),"车速 ("+VehicleSpeed.Unit+")",small);
+        }
+        void MetricValue(Rect rect,string value,GUIStyle style) {
+            int originalSize=style.fontSize;
+            try {
+                float width=style.CalcSize(new GUIContent(value)).x;
+                if(width>rect.width)style.fontSize=Mathf.Max(12,Mathf.FloorToInt(originalSize*(rect.width-4)/width));
+                GUI.Label(rect,value,style);
+            }finally{style.fontSize=originalSize;}
         }
         void DrawBody() {
-            DrawMetrics();
-            if(Btn(new Rect(16,138,130,32),"武器明细",view==0))view=0;
-            if(Btn(new Rect(152,138,130,32),"实时曲线",view==1))view=1;
-            if(Btn(new Rect(288,138,168,32),"奇物增益统计",view==2))view=2;
+            if(view==3)DrawHistoryMetrics();else DrawMetrics();
+            if(Active) {
+                if(Btn(new Rect(16,138,92,32),"武器明细",view==0)){view=0;historyOpen=false;}
+                if(Btn(new Rect(114,138,92,32),"实时曲线",view==1)){view=1;historyOpen=false;}
+                if(Btn(new Rect(212,138,104,32),"奇物增益统计",view==2)){view=2;historyOpen=false;}
+                if(Btn(new Rect(322,138,104,32),"历史战绩",view==3)){view=3;historyOpen=true;appearanceOpen=false;}
+            }
             if(view==1){if(Btn(new Rect(panel.width-178,138,162,32),"最近 "+ranges[rangeIndex]+" 秒",false))rangeIndex=(rangeIndex+1)%ranges.Length;DrawGraph();}
             else if(view==0){if(Btn(new Rect(panel.width-178,138,162,32),"排序："+sortNames[preferences.sortMode]+" ↓",false)){preferences.sortMode=(preferences.sortMode+1)%3;DirtyPreferences();}DrawTable();}
-            else DrawRelics();
+            else if(view==2)DrawRelics();else DrawHistory();
             Fill(new Rect(16,BodyHeight-37,panel.width-32,1),new Color(.2f,.25f,.3f));
-            GUI.Label(new Rect(18,BodyHeight-29,panel.width-210,24),"F1 视图  F2 范围  F3 隐藏  F4 清零  F5 精简",small);
-            Label(new Rect(panel.width-190,BodyHeight-29,146,24),"战斗时间 "+Stats.Time.ToString("N1")+"s",small,muted);
+            GUI.Label(new Rect(18,BodyHeight-29,panel.width-42,24),"F1 视图  F2 范围  F3 隐藏  F4 本局清零  F5 精简  F6 辅助合并/分开  F7 历史",small);
+            if(view!=3)Label(new Rect(panel.width-250,BodyHeight-58,232,21),"战斗时间 "+Stats.Time.ToString("N1")+"s",small,muted);
             Label(new Rect(panel.width-250,BodyHeight-104,232,23),"B站：-_小西瓜_-",signature,accent);
             Label(new Rect(panel.width-250,BodyHeight-81,232,22),"uid:153345791",signature,muted);
         }
@@ -207,7 +233,7 @@ namespace OneWayDps {
             try {preferences.Sanitize();Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath));File.WriteAllText(SettingsPath,JsonUtility.ToJson(preferences,true));}
             catch(Exception e){Debug.LogWarning("[OneWayDps] Settings save: "+e.Message);}
         }
-        void OnApplicationQuit(){if(preferencesDirty)SavePreferences();}
+        void OnApplicationQuit(){if(preferencesDirty)SavePreferences();RunRecorder.SceneEnding();}
         static string SlotLabel(string slot) {
             switch(slot) {
                 case "slot_front":return "前方";
@@ -224,7 +250,7 @@ namespace OneWayDps {
             float notesHeight=Mathf.Max(68,footerNotes.CalcHeight(new GUIContent(WeaponNotes),width-280));
             float notesY=BodyHeight-49-notesHeight;
             float comparisonY=notesY-26-54;
-            GUI.Label(new Rect(22,182,width-386,25),"武器 / 品质",small);
+            GUI.Label(new Rect(22,182,width-386,25),"伤害来源 / 品质",small);
             Label(new Rect(width-361,182,72,25),"实时 DPS",right,muted);Label(new Rect(width-286,182,76,25),"全局 DPS",right,muted);Label(new Rect(width-206,182,80,25),"总伤害",right,muted);Label(new Rect(width-122,182,76,25),"伤害占比",right,muted);
             Rect view=new Rect(16,213,width-32,Mathf.Max(60,comparisonY-12-213));
             scroll=GUI.BeginScrollView(view,scroll,new Rect(0,0,width-52,Mathf.Max(view.height,rows.Count*66)));
