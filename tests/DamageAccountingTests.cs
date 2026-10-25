@@ -15,7 +15,7 @@ namespace World {
     }
 }
 namespace World.Devices { public class Device : FakeTarget {} }
-namespace World.Projectiles { public class Projectile : FakeTarget { public ITarget emitter; } }
+namespace World.Projectiles { public class Projectile : FakeTarget { public ITarget emitter; public AutoCodes.projectile desc; } }
 namespace World.Adherents { public class Adherent : FakeTarget { public ITarget _source; public Adherent(){faction=WorldEnum.Faction.neutral;} } }
 namespace OneWayDps { public static class DpsOverlay { public static bool Active;public static readonly CombatStats Stats=new CombatStats();public static void Begin(){Active=true;Stats.NewRun();} } }
 class DamageAccountingTests {
@@ -50,3 +50,4 @@ class DamageAccountingTests {
         Console.WriteLine("PASS damage accounting: "+passed+" assertions");
     }
 }
+namespace AutoCodes { public class projectile { public uint projectile_id; } }

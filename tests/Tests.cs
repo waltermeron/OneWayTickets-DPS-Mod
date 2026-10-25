@@ -18,7 +18,7 @@ namespace OneWayDps {
  public static class DpsOverlay { public static bool Active; public static readonly CombatStats Stats=new CombatStats(); public static DamageMeter Meter {get{return Stats.Total;}} public static void Begin(){ Active=true; Stats.NewRun(); } }
 }
 namespace World.Devices { public class Device : World.FakeTarget {} }
-namespace World.Projectiles { public class Projectile : World.FakeTarget { public World.ITarget emitter; } }
+namespace World.Projectiles { public class Projectile : World.FakeTarget { public World.ITarget emitter; public AutoCodes.projectile desc; } }
 namespace World.Adherents { public class Adherent : World.FakeTarget { public World.ITarget _source; } }
 class Tests {
  static int passed;
@@ -126,3 +126,4 @@ class Tests {
 }
 
 
+namespace AutoCodes { public class projectile { public uint projectile_id; } }

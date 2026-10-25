@@ -1,11 +1,12 @@
 {
-    "opacity": 0.7011235952377319,
+    "opacity": 1.0,
     "size": 1.0,
-    "x": 8.0,
-    "y": 8.0,
-    "width": 642.5,
-    "height": 611.5,
+    "x": 172.0,
+    "y": 377.0,
+    "width": 686.75,
+    "height": 571.75,
     "dpsOnly": false,
+    "separateAuxiliary": false,
     "sortMode": 0,
     "layoutVersion": 2
 }
