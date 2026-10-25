@@ -18,7 +18,7 @@ v1.1.1：适配 v0.8.0.3 版本，同时增加了历史对战数据（包括dps,
 - 同名武器按独立实例分行，保留装备位置文字，不显示编号。默认按总伤排序，可点击右上角按钮依次切换累计伤害、实时 DPS、全局 DPS 排序。
 - 轮子未造成伤害时隐藏，造成有效伤害后显示；其他已装备武器照常显示零值。造成伤害后卸下的武器会保留本次统计。
 - 投射物沿 emitter 链归属武器，附着物沿 source 链归属武器。无法归属到具体武器的玩家伤害归入“其他伤害”，保证分项总伤等于总伤。
-- <img width="470" height="360" alt="image" src="https://github.com/user-attachments/assets/6920b07a-7a18-435b-9cff-ca437d2ec4da" /> <img width="470" height="360" alt="image" src="https://github.com/user-attachments/assets/449c3357-7885-4ba6-b794-f456d32f831b" />
+- <img width="670" height="360" alt="image" src="https://github.com/user-attachments/assets/6920b07a-7a18-435b-9cff-ca437d2ec4da" /> <img width="670" height="360" alt="image" src="https://github.com/user-attachments/assets/449c3357-7885-4ba6-b794-f456d32f831b" />
 
 ## 图表与操作
 
