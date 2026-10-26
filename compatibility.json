@@ -1,19 +1,23 @@
 {
-  "originalWorldSha256": "E1C94F42A7BFE7D4D5F20F2585AA1DAC9856935D6BF983E5D30C94BF62082A60",
+  "originalWorldSha256": "D8D4343D4AE40C377E21F95C026DC32C84ADD4B15A2CFFEBD99D86114953EA27",
   "unityTickRate": 120,
   "damageCallSites": 74,
-  "version": "1.1.1",
+  "version": "1.2.0",
   "attributionScopes": 93,
   "delayedCaptureSites": 25,
   "historyWorldObservers": 3,
   "historySchema": 1,
   "historyCommonsObservers": 4,
-  "originalCommonsSha256": "1FE86EEAE2CAD8AC81BF74F655376FE2B2916320A7E4606D156AAF70E58C01C9",
+  "originalCommonsSha256": "C64EAF8B0575A7600C1BA1F23D04F37D72AB6E2D1493DF6F5102CC0621F73AE9",
   "requiredAssemblies": {
     "AutoCodes.dll": "7524651CA21740E99CE62D608D9D89C516B8693B50877C1C66951615F731423E",
     "Foundations.dll": "6E8409A70072A9711584699C107E6ECD857C53A4FA09A70D914A1E9744EBB158",
-    "Init.dll": "1D79F3D7D3F77FABFBED739E0E7E254E6DB5540C37578A349FE48966296D9FE8"
+    "Init.dll": "184A2196586893FDF11ABDB0FFCC6F5F990B8996116E3263B11780298A89CC17"
   },
   "gameVersion": "0.8.0.3",
-  "steamBuildId": "26195956"
+  "steamBuildId": "26211032",
+  "gameDataDirectory": "One Way Tickets_Data",
+  "gameExecutable": "One Way Tickets.exe",
+  "loadingMode": "bepinex-memory",
+  "loaderVersion": "5.4.23.6"
 }

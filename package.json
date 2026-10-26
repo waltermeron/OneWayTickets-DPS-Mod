@@ -1,14 +1,9 @@
 {
-  "version": "1.1.1",
-  "originalSha256": "E1C94F42A7BFE7D4D5F20F2585AA1DAC9856935D6BF983E5D30C94BF62082A60",
-  "patchedSha256": "4B9CDA24325404DB0A0A3659091908F72D19A6E0486A7C3F29E0C9004B36412E",
-  "modSha256": "78C04EEE180FF9C6A71A7DEBBF55824E58C6712C3368AA0D010896D3901E849D",
-  "installedAt": "2026-10-25T19:53:25.6682876+08:00",
-  "originalCommonsSha256": "1FE86EEAE2CAD8AC81BF74F655376FE2B2916320A7E4606D156AAF70E58C01C9",
-  "patchedCommonsSha256": "CE029C04C24E4BD37EC3E1E8A573045D84343018807EB4DD84B8E64199AE428F",
-  "gameVersion": "0.8.0.3",
-  "steamBuildId": "26195956",
-  "author": "B站：-_小西瓜_-",
-  "authorUid": "153345791",
-  "archiveLayout": "Extract contents into game root"
+  "testedGameVersion": "0.8.0.3",
+  "version": "1.2.0",
+  "testedSteamBuild": "26211032",
+  "loader": "BepInEx 5.4.23.6 x64",
+  "includesPersonalData": false,
+  "includesGameAssemblies": false,
+  "loadingMode": "bepinex-memory"
 }
