@@ -27,7 +27,6 @@ namespace OneWayDps {
         readonly Dictionary<int,WeaponVisual> visuals=new Dictionary<int,WeaponVisual>();
         readonly List<CombatStats.Entry> rows=new List<CombatStats.Entry>();
         readonly List<object> equipped=new List<object>();
-        static readonly Color bg=new Color(.045f,.062f,.09f,.96f), card=new Color(.09f,.12f,.16f,.97f), muted=new Color(.57f,.65f,.73f), ink=new Color(.91f,.95f,.98f), accent=new Color(.32f,.94f,.76f);
         public static void Begin() {
             Stats.NewRun(); Active=true;
             Boot();
@@ -38,7 +37,7 @@ namespace OneWayDps {
             if(instance==null) {
                 var obj=new GameObject("OneWayDpsOverlay");DontDestroyOnLoad(obj);instance=obj.AddComponent<DpsOverlay>();instance.LoadPreferences();
                 Stats.SeparateAuxiliary=instance.preferences.separateAuxiliary;
-                Debug.Log("[OneWayDps] Loaded v1.2.0 (BepInEx memory loader) | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact; F6 auxiliary sources; F7 history.");
+                Debug.Log("[OneWayDps] Loaded v1.3.0 (BepInEx memory loader) | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact; F6 auxiliary sources; F7 history.");
             }
         }
         void Update() {
@@ -69,11 +68,11 @@ namespace OneWayDps {
             big=new GUIStyle(normal);big.fontSize=30;big.fontStyle=FontStyle.Bold;big.normal.textColor=accent;
             right=new GUIStyle(normal);right.alignment=TextAnchor.MiddleRight;
             nameStyle=new GUIStyle(normal);nameStyle.fontStyle=FontStyle.Bold;nameStyle.clipping=TextClipping.Clip;
-            button=new GUIStyle(normal);button.alignment=TextAnchor.MiddleCenter;
             notes=new GUIStyle(small);notes.wordWrap=true;
             footerNotes=new GUIStyle(notes);footerNotes.fontSize=14;footerNotes.normal.textColor=ink;
             comparisonValue=new GUIStyle(normal);comparisonValue.fontSize=16;comparisonValue.fontStyle=FontStyle.Bold;
             signature=new GUIStyle(normal);signature.alignment=TextAnchor.UpperRight;signature.fontStyle=FontStyle.Bold;
+            InitTheme();
         }
         void OnGUI() {
             Event input=Event.current;
@@ -91,7 +90,7 @@ namespace OneWayDps {
             if(!visible)return;if(normal==null)InitStyle();
             rows.Clear();foreach(var entry in Stats.Entries)if(entry.Visible)rows.Add(entry);
             rows.Sort(delegate(CombatStats.Entry a,CombatStats.Entry b){int c=Stats.SortValue(b,preferences.sortMode).CompareTo(Stats.SortValue(a,preferences.sortMode));return c!=0?c:a.Id.CompareTo(b.Id);});
-            Matrix4x4 matrix=GUI.matrix;int depth=GUI.depth;Color color=GUI.color;
+            Matrix4x4 matrix=GUI.matrix;int depth=GUI.depth;Color color=GUI.color;GUISkin originalSkin=GUI.skin;
             try {
                 // Position and dimensions never affect the screen's fixed display scale.
                 GUI.matrix=Matrix4x4.identity;
@@ -106,8 +105,9 @@ namespace OneWayDps {
                 GUI.color=Color.white;
                 GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,new Vector3(renderScale,renderScale,1));GUI.depth=-10000;
                 panel.x=preferences.x/renderScale;panel.y=preferences.y/renderScale;
+                GUI.skin=gameSkin;
                 GUI.Window(198367201,panel,DrawPanel,"",GUIStyle.none);
-            }finally{GUI.matrix=matrix;GUI.depth=depth;GUI.color=color;}
+            }finally{GUI.skin=originalSkin;GUI.matrix=matrix;GUI.depth=depth;GUI.color=color;}
         }
         void ReleaseGesture(){if(gesture!=0){GUIUtility.hotControl=0;gesture=0;}}
         void ReleaseInput(){GUIUtility.hotControl=0;gesture=0;}
@@ -139,13 +139,14 @@ namespace OneWayDps {
         void Fill(Rect r,Color c){Color old=GUI.color;GUI.color=new Color(c.r,c.g,c.b,HudLayout.SurfaceAlpha(c.a,preferences.opacity));GUI.DrawTexture(r,Texture2D.whiteTexture,ScaleMode.StretchToFill,true);GUI.color=old;}
         void Label(Rect r,string s,GUIStyle style,Color c){Color old=style.normal.textColor;style.normal.textColor=c;GUI.Label(r,s,style);style.normal.textColor=old;}
         bool Btn(Rect r,string s,bool on) {
-            Fill(r,on?new Color(.12f,.3f,.29f):card);
-            if(on)Fill(new Rect(r.x,r.yMax-2,r.width,2),accent);
-            return GUI.Button(r,s,button);
+            Color old=GUI.color;GUI.color=new Color(1,1,1,HudLayout.SurfaceAlpha(1,preferences.opacity));
+            bool clicked=GUI.Button(r,"",on?selectedButton:button);GUI.color=old;
+            Label(new Rect(r.x+4,r.y+1,r.width-8,r.height-2),s,buttonLabel,on?accent:ink);
+            return clicked;
         }
         WeaponVisual Visual(CombatStats.Entry e) {WeaponVisual v;return visuals.TryGetValue(e.Id,out v)?v:new WeaponVisual{Name="加载武器信息…"};}
         void DrawPanel(int id) {
-            Fill(new Rect(3,5,panel.width,panel.height),new Color(0,0,0,.3f));Fill(new Rect(0,0,panel.width,panel.height),bg);Fill(new Rect(0,0,panel.width,3),accent);
+            Fill(new Rect(3,5,panel.width-3,panel.height-5),new Color(0,0,0,.3f));PixelPanel(new Rect(0,0,panel.width,panel.height));
             GUI.Label(new Rect(18,13,120,28),view==3?"历史战绩":"战斗分析",bold);
             GUI.Label(new Rect(142,18,panel.width-298,24),(view==3 && historySelected==""?"最近一局 · ":"")+(Stats.SeparateAuxiliary?"辅助伤害：分别统计":"辅助伤害：合并武器"),small);
             if(Btn(new Rect(panel.width-146,12,130,30),view==3?"关闭历史":appearanceOpen?"收起窗口设置":"窗口设置",appearanceOpen && view!=3)) {
@@ -163,14 +164,15 @@ namespace OneWayDps {
         void DrawResizeGrip() {
             float side=renderCompact?16:28;
             Rect r=new Rect(panel.width-side-1,panel.height-side-1,side,side);
-            Fill(r,card);Color old=GUI.color;GUI.color=accent;
+            Fill(r,card);Color old=GUI.color;GUI.color=muted;
             for(int line=0;line<3;line++)for(int step=0;step<(renderCompact?7:12)-line*2;step++)
                 GUI.DrawTexture(new Rect(r.x+4+line*(renderCompact?3:5)+step,r.yMax-3-step,2,2),Texture2D.whiteTexture);
             GUI.color=old;
         }
         void DrawMetrics() {
             float metricWidth=(panel.width-32)/5;
-            Fill(new Rect(16,52,panel.width-32,73),card);
+            Surface(new Rect(16,52,panel.width-32,73));
+            for(int i=1;i<5;i++)Fill(new Rect(16+metricWidth*i,63,1,49),rim);
             MetricValue(new Rect(28,58,metricWidth-16,42),Stats.Total.Dps.ToString("N1"),big);
             GUI.Label(new Rect(28,99,metricWidth-16,20),"实时 DPS",small);
             MetricValue(new Rect(28+metricWidth,62,metricWidth-16,26),Stats.GlobalDps.ToString("N1"),bold);GUI.Label(new Rect(28+metricWidth,96,metricWidth-16,22),"全局 DPS",small);
@@ -198,14 +200,14 @@ namespace OneWayDps {
             if(view==1){if(Btn(new Rect(panel.width-178,138,162,32),"最近 "+ranges[rangeIndex]+" 秒",false))rangeIndex=(rangeIndex+1)%ranges.Length;DrawGraph();}
             else if(view==0){if(Btn(new Rect(panel.width-178,138,162,32),"排序："+sortNames[preferences.sortMode]+" ↓",false)){preferences.sortMode=(preferences.sortMode+1)%3;DirtyPreferences();}DrawTable();}
             else if(view==2)DrawRelics();else DrawHistory();
-            Fill(new Rect(16,BodyHeight-37,panel.width-32,1),new Color(.2f,.25f,.3f));
+            Fill(new Rect(16,BodyHeight-37,panel.width-32,1),rim);
             GUI.Label(new Rect(18,BodyHeight-29,panel.width-42,24),"F1 视图  F2 范围  F3 隐藏  F4 本局清零  F5 精简  F6 辅助合并/分开  F7 历史",small);
             if(view!=3)Label(new Rect(panel.width-250,BodyHeight-58,232,21),"战斗时间 "+Stats.Time.ToString("N1")+"s",small,muted);
             Label(new Rect(panel.width-250,BodyHeight-104,232,23),"B站：-_小西瓜_-",signature,accent);
             Label(new Rect(panel.width-250,BodyHeight-81,232,22),"uid:153345791",signature,muted);
         }
         void DrawAppearance() {
-            Fill(new Rect(16,52,panel.width-32,88),card);
+            Surface(new Rect(16,52,panel.width-32,88));
             GUI.Label(new Rect(28,59,100,24),"窗口透明度",normal);
             float transparency=GUI.HorizontalSlider(new Rect(140,68,panel.width-370,20),1-preferences.opacity,0,.8f);
             GUI.Label(new Rect(panel.width-215,59,60,24),(transparency*100).ToString("0")+"%",normal);
@@ -256,16 +258,16 @@ namespace OneWayDps {
             scroll=GUI.BeginScrollView(view,scroll,new Rect(0,0,width-52,Mathf.Max(view.height,rows.Count*66)));
             for(int i=0;i<rows.Count;i++) {
                 var e=rows[i];var v=Visual(e);float y=i*66;
-                Fill(new Rect(0,y,width-52,61),selected==e.Id?new Color(.12f,.22f,.26f):card);
+                Fill(new Rect(0,y,width-52,61),selected==e.Id?selectedCard:card);
                 Fill(new Rect(0,y,3,61),v.Color);
-                Fill(new Rect(12,y+9,44,44),new Color(.035f,.05f,.07f));WeaponAssets.DrawIcon(new Rect(14,y+11,40,40),v.Icon);
+                Fill(new Rect(12,y+9,44,44),recess);WeaponAssets.DrawIcon(new Rect(14,y+11,40,40),v.Icon);
                 Label(new Rect(68,y+6,width-456,25),v.Name,nameStyle,v.Color);
                 GUI.Label(new Rect(68,y+32,width-456,21),v.Quality+(SlotLabel(e.Slot)==""?"":"  ·  "+SlotLabel(e.Slot)),small);
                 GUI.Label(new Rect(width-377,y+9,72,25),e.Meter.Dps.ToString("N1"),right);
                 GUI.Label(new Rect(width-302,y+9,76,25),Stats.GlobalDpsFor(e).ToString("N1"),right);
                 GUI.Label(new Rect(width-222,y+9,80,25),e.Meter.Total.ToString("N0"),right);
                 double share=Stats.Share(e);Label(new Rect(width-138,y+9,76,25),(share*100).ToString("F1")+"%",right,v.Color);
-                Fill(new Rect(width-374,y+44,310,4),new Color(.04f,.06f,.08f));Fill(new Rect(width-374,y+44,(float)(310*share),4),v.Color);
+                Fill(new Rect(width-374,y+44,310,4),recess);Fill(new Rect(width-374,y+44,(float)(310*share),4),v.Color);
                 if(GUI.Button(new Rect(0,y,width-383,61),"",GUIStyle.none)){selected=e.Id;this.view=1;}
             }
             if(rows.Count==0)GUI.Label(new Rect(22,22,540,56),"等待已装备武器或首次有效命中…",normal);
@@ -275,7 +277,7 @@ namespace OneWayDps {
         }
         void DrawDamageComparison(float y) {
             float cell=(panel.width-32)/3;
-            Fill(new Rect(16,y,panel.width-32,54),card);
+            Surface(new Rect(16,y,panel.width-32,54));
             string[] names={"飘字累计","有效累计","差额（含溢出）"};
             double[] values={Stats.ReportedDamage,Stats.Total.Total,Stats.DifferenceDamage};
             for(int i=0;i<3;i++) {
@@ -340,12 +342,12 @@ namespace OneWayDps {
             max=NiceMax(max*1.12);
             GUI.Label(new Rect(18,183,panel.width-235,25),tracked.Count==1?"DPS / "+DisplayName(tracked[0]):"DPS / 全部伤害来源",small);
             if(Btn(new Rect(panel.width-202,182,186,27),selected>=0?"显示全部来源":"总计 + 全部来源",selected>=0))selected=-1;
-            Fill(plot,new Color(.025f,.039f,.058f));
+            Fill(plot,recess);
             for(int i=0;i<=4;i++) {
                 float y=plot.yMax-plot.height*i/4;
-                Fill(new Rect(plot.x,y,plot.width,1),new Color(.16f,.2f,.25f));
+                Fill(new Rect(plot.x,y,plot.width,1),grid);
                 Label(new Rect(8,y-10,53,21),(max*i/4).ToString("0.#"),right,muted);
-                float x=plot.x+plot.width*i/4;Fill(new Rect(x,plot.y,1,plot.height),new Color(.12f,.16f,.2f));
+                float x=plot.x+plot.width*i/4;Fill(new Rect(x,plot.y,1,plot.height),grid);
                 GUI.Label(new Rect(x-14,plot.yMax+5,72,22),(start+(end-start)*i/4).ToString("0.#")+"s",small);
             }
             DrawRaster(plot,start,end,max,tracked);
@@ -367,10 +369,10 @@ namespace OneWayDps {
                 foreach(var s in Stats.History)if(Math.Abs(s.Time-t)<gap){nearest=s;gap=Math.Abs(s.Time-t);}
                 if(nearest!=null && nearest.Time>=start) {
                     float x=plot.x+(float)((nearest.Time-start)/(end-start))*plot.width;
-                    Fill(new Rect(x,plot.y,1,plot.height),new Color(.8f,.9f,1f,.5f));
+                    Fill(new Rect(x,plot.y,1,plot.height),new Color(ink.r,ink.g,ink.b,.5f));
                     string tip=nearest.Time.ToString("F2")+"s  |  总 DPS "+nearest.Total.ToString("N1");
                     float tipHeight=tracked.Count==1?48:25;
-                    Fill(new Rect(plot.x+8,plot.y+8,plot.width-16,tipHeight),new Color(.06f,.1f,.15f,.95f));GUI.Label(new Rect(plot.x+14,plot.y+9,plot.width-28,23),tip,small);
+                    Fill(new Rect(plot.x+8,plot.y+8,plot.width-16,tipHeight),bg);GUI.Label(new Rect(plot.x+14,plot.y+9,plot.width-28,23),tip,small);
                     if(tracked.Count==1)GUI.Label(new Rect(plot.x+14,plot.y+31,plot.width-28,23),DisplayName(tracked[0])+"  DPS "+nearest.Value(tracked[0].Id).ToString("N1"),small);
                 }
             }
@@ -419,7 +421,7 @@ namespace OneWayDps {
                 }
             }
         }
-        void OnDestroy(){if(preferencesDirty)SavePreferences();if(chartTexture!=null)Destroy(chartTexture);}
+        void OnDestroy(){if(preferencesDirty)SavePreferences();if(chartTexture!=null)Destroy(chartTexture);DisposeTheme();}
     }
 }
 

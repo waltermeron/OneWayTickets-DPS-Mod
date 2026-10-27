@@ -33,7 +33,8 @@ namespace OneWayDps {
         }
         void DrawHistoryMetrics() {
             var r=HistorySelected();float w=(panel.width-32)/5;
-            Fill(new Rect(16,52,panel.width-32,73),card);
+            Surface(new Rect(16,52,panel.width-32,73));
+            for(int i=1;i<5;i++)Fill(new Rect(16+w*i,63,1,49),rim);
             string[] values={r==null?"0":r.Damage.ToString("N0"),r==null?"0.0":r.GlobalDps.ToString("N1"),r==null?"0.0":r.AverageDps.ToString("N1"),r==null || r.SpeedTicks==0?"--":r.AverageSpeed.ToString("N1"),r==null?"00:00:00":Duration(r.PlaySeconds)};
             string[] labels={"累计有效伤害","全局 DPS","平均 DPS","平均车速 (m/s)",r!=null && r.Partial?"已记录游玩时间":"单局游玩时间"};
             for(int i=0;i<5;i++){MetricValue(new Rect(28+w*i,62,w-16,26),values[i],bold);GUI.Label(new Rect(28+w*i,96,w-16,22),labels[i],small);}
@@ -42,7 +43,7 @@ namespace OneWayDps {
             var data=RunRecorder.Data;
             if(historySelected!="") {var r=data.Runs.Find(x=>x.Id==historySelected);if(r!=null){DrawHistoryDetail(r);return;}historySelected="";}
             if(!Active)GUI.Label(new Rect(20,139,panel.width-210,28),"本机历史 · "+data.Runs.Count+" 局 · 最近一局指标见上方",normal);
-            GUI.Label(new Rect(20,182,48,24),"查询",small);Fill(new Rect(70,181,panel.width-270,27),card);
+            GUI.Label(new Rect(20,182,48,24),"查询",small);Surface(new Rect(70,181,panel.width-270,27));
             historySearch=GUI.TextField(new Rect(75,181,panel.width-280,27),historySearch,normal);
             string[] filters={"全部记录","已结束","进行 / 暂停"};
             if(Btn(new Rect(panel.width-178,138,162,32),filters[historyFilter],false)){historyFilter=(historyFilter+1)%3;historyScroll=Vector2.zero;}

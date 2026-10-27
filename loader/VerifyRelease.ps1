@@ -2,7 +2,7 @@
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $modRoot=Split-Path $PSScriptRoot -Parent;$root=Split-Path $modRoot -Parent
-if(!$Archive){$Archive=Join-Path $root 'OneWayTickets_DPSMod_v1.2.0_BepInEx_x64.zip'}
+if(!$Archive){$Archive=Join-Path $root 'OneWayTickets_DPSMod_v1.3.0_BepInEx_x64.zip'}
 . (Join-Path $modRoot 'GamePaths.ps1')
 $game=Get-DpsGamePaths -Root $root
 $fixture=Join-Path $modRoot ('build/verify-loader-'+[Guid]::NewGuid().ToString('N'))
@@ -40,13 +40,16 @@ try{
         if(!(Test-Path -LiteralPath (Join-Path $fixture 'BepInEx/plugins/OneWaySpeaker/OneWaySpeaker.dll'))){throw 'Speaker migration missing'}
         & (Join-Path $fm 'DisableSpeaker.ps1')
         & (Join-Path $fm 'Uninstall.ps1')
+        # This fixture intentionally reproduces the older game build belonging
+        # to that legacy snapshot; compare with its matching official originals.
+        foreach($n in @('World.dll','Commons.dll','Camp.dll')){$gameHashes[$n]=(Get-FileHash -LiteralPath (Join-Path $legacy ('originals/'+$n))).Hash}
     }
     $native=Join-Path $fixture 'winhttp.dll';$bytes=[IO.File]::ReadAllBytes($native);[IO.File]::WriteAllText($native,'unknown-shared-loader')
     $rejected=$false;try{& (Join-Path $fm 'Install.ps1') -CheckOnly}catch{if($_.Exception.Message -notmatch 'Different shared loader'){throw};$rejected=$true};if(!$rejected){throw 'Unknown shared loader was accepted'}
     [IO.File]::WriteAllBytes($native,$bytes)
     foreach($n in $gameHashes.Keys){if((Get-FileHash -LiteralPath (Join-Path $fg $n)).Hash -ne $gameHashes[$n]){throw ('Official DLL changed: '+$n)}}
     foreach($p in $private){if((Get-FileHash -LiteralPath $p).Hash -ne $privateHashes[$p]){throw 'Private data changed'}}
-    Write-Output 'PASS v1.2 release: clean install, recheck, combined legacy migration, speaker disable, DPS uninstall, shared-loader rejection, personal data and official DLLs preserved.'
+    Write-Output 'PASS v1.3.0 release: clean install, recheck, combined legacy migration, speaker disable, DPS uninstall, shared-loader rejection, personal data and matching official DLLs preserved.'
 }finally{
     $base=[IO.Path]::GetFullPath((Join-Path $modRoot 'build')).TrimEnd('\')+'\';$absolute=[IO.Path]::GetFullPath($fixture)
     if(!$absolute.StartsWith($base,[StringComparison]::OrdinalIgnoreCase) -or [IO.Path]::GetFileName($absolute) -notmatch '^verify-loader-[0-9a-f]{32}$'){throw 'Unsafe fixture cleanup path'}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -85,7 +85,7 @@ namespace OneWayDps.Loading {
                 string speaker=Path.Combine(Paths.PluginPath,"OneWaySpeaker","OneWaySpeaker.dll");
                 // Presence of the optional plugin, rather than legacy folders, controls the speaker layer.
                 plan=MemoryPlan.Prepare(Paths.ManagedPath,runtime,File.Exists(speaker)?speaker:null);
-                log.LogInfo("v1.2.0 prepared in memory: "+plan.DamageCalls+" damage calls, "+plan.Scopes+" contexts, "+plan.Captures+" captures. Game DLLs are not written.");
+                log.LogInfo("v1.3.0 prepared in memory: "+plan.DamageCalls+" damage calls, "+plan.Scopes+" contexts, "+plan.Captures+" captures. Game DLLs are not written.");
             }catch(Exception e){RestoreDirectory();Failure=e.ToString();log.LogError("DPS disabled: compatibility check failed. Game files were not changed. "+Failure);}
         }
         static void RestoreDirectory(){if(workingDirectory!=null){Environment.CurrentDirectory=workingDirectory;workingDirectory=null;}}
@@ -107,7 +107,7 @@ namespace OneWayDps.Loading {
                 Directory.CreateDirectory(cache);string file=Path.Combine(cache,"OneWayDps.dll");
                 if(!File.Exists(file))File.WriteAllBytes(file,plan.Runtime);
                 RuntimeAssembly=Assembly.LoadFrom(file);Ready=true;
-                log.LogInfo("v1.2.0 runtime assemblies loaded. Optional speaker="+(plan.Speaker!=null));
+                log.LogInfo("v1.3.0 runtime assemblies loaded. Optional speaker="+(plan.Speaker!=null));
             }catch(Exception e){Failure=e.ToString();log.LogError("DPS runtime load failed: "+Failure);}finally{RestoreDirectory();}
         }
     }
