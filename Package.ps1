@@ -1,7 +1,7 @@
 ﻿$ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $root=Split-Path $PSScriptRoot -Parent
-$zip=Join-Path $root 'OneWayTickets_DPSMod_v1.2.0_BepInEx_x64.zip'
+$zip=Join-Path $root 'OneWayTickets_DPSMod_v1.3.0_BepInEx_x64.zip'
 if(Test-Path -LiteralPath $zip){throw 'Release archive already exists'}
 $stage=Join-Path $PSScriptRoot ('build/package-'+[Guid]::NewGuid().ToString('N'))
 try{
@@ -12,7 +12,7 @@ try{
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'vendor/source/UnityDoorstop-v4.6.0-source.zip') -Destination (Join-Path $mod 'vendor/source')
     foreach($name in @('更新日志.txt','辅助伤害物品清单.txt')){Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $stage}
 @"
-再再启程 DPS Mod v1.2（1.2.0）独立加载器版
+再再启程 DPS Mod v1.3.0独立加载器版
 
 退出游戏，把本包解压到游戏根目录，再双击 DPSMod/安装或迁移.cmd。
 本包不会通过解压覆盖游戏 DLL；安装器会先检查、备份并迁移旧版静态补丁。
@@ -23,7 +23,7 @@ try{
 F1 视图；F2 时间范围；F3 隐藏；F4 清零；F5 精简；F6 辅助伤害；F7 历史。
 日志：BepInEx/LogOutput.log。详细安装、共存与卸载见 DPSMod/LOADER_v1.2.md。
 "@|Set-Content -LiteralPath (Join-Path $stage '安装说明.txt') -Encoding UTF8
-    @{version='1.2.0';loadingMode='bepinex-memory';loader='BepInEx 5.4.23.6 x64';testedGameVersion='0.8.0.3';testedSteamBuild='26211032';includesGameAssemblies=$false;includesPersonalData=$false}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $mod 'package.json') -Encoding UTF8
+    @{version='1.3.0';loadingMode='bepinex-memory';loader='BepInEx 5.4.23.6 x64';testedGameVersion='0.8.0.4';testedSteamBuild='26215488';includesGameAssemblies=$false;includesPersonalData=$false}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $mod 'package.json') -Encoding UTF8
     foreach($f in Get-ChildItem -LiteralPath $stage -File -Recurse){if($f.Name -in @('World.dll','Commons.dll','Camp.dll','history.json','settings.json','installed.json') -or $f.Extension -in @('.dat','.mp3')){throw ('Private/game file in package: '+$f.FullName)}}
     [IO.Compression.ZipFile]::CreateFromDirectory($stage,$zip,[IO.Compression.CompressionLevel]::Optimal,$false)
     ((Get-FileHash -LiteralPath $zip).Hash+'  '+[IO.Path]::GetFileName($zip))|Set-Content -LiteralPath ($zip+'.sha256.txt') -Encoding UTF8

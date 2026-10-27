@@ -29,7 +29,7 @@ if($WithSpeaker){
     & $csc /nologo /noconfig /codepage:65001 /target:library /nostdlib+ /optimize+ ('/out:'+(Join-Path $out 'OneWaySpeaker.dll')) $refs (Join-Path $root 'SpeakerMod/src/Speaker.cs')
     if($LASTEXITCODE -ne 0){throw 'Optional speaker compilation failed'}
 }
-Write-Output 'Built DPS v1.2.0 independent memory loader. No game assemblies replaced.'
+Write-Output 'Built DPS v1.3.0 independent memory loader. No game assemblies replaced.'
 $payload=Join-Path $PSScriptRoot 'payload'
 foreach($d in @('BepInEx/core','BepInEx/patchers','BepInEx/plugins/OneWayDps')){New-Item -ItemType Directory -Path (Join-Path $payload $d) -Force|Out-Null}
 Get-ChildItem -LiteralPath $core -File|Copy-Item -Destination (Join-Path $payload 'BepInEx/core') -Force

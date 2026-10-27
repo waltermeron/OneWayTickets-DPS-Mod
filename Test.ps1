@@ -34,7 +34,9 @@ $candidate=Join-Path $PSScriptRoot 'build/v1.2/pure-proof/World.dll'
 if(!(Test-Path -LiteralPath $candidate)){$candidate=Join-Path $game.Managed 'World.dll'}
 $commonCandidate=Join-Path $PSScriptRoot 'build/v1.2/pure-proof/Commons.dll'
 if(!(Test-Path -LiteralPath $commonCandidate)){$commonCandidate=Join-Path $game.Managed 'Commons.dll'}
-& (Join-Path $PSScriptRoot 'build/PatchTests.exe') (Join-Path $PSScriptRoot 'backup/World.dll') $candidate (Join-Path $PSScriptRoot 'backup/Commons.dll') $commonCandidate
+# The independent loader reads today's official DLLs; legacy backup DLLs can
+# belong to an older Steam build and are not the baseline for an in-memory plan.
+& (Join-Path $PSScriptRoot 'build/PatchTests.exe') (Join-Path $game.Managed 'World.dll') $candidate (Join-Path $game.Managed 'Commons.dll') $commonCandidate
 if($LASTEXITCODE -ne 0){throw 'Game patch verification failed'}
 & $csc /nologo /codepage:65001 /reference:System.Web.Extensions.dll ('/out:'+(Join-Path $PSScriptRoot 'build/RunHistoryTests.exe')) (Join-Path $PSScriptRoot 'tests/RunHistoryTests.cs') (Join-Path $PSScriptRoot 'src/RunHistory.cs') (Join-Path $PSScriptRoot 'src/CombatStats.cs') (Join-Path $PSScriptRoot 'src/DamageMeter.cs')
 if($LASTEXITCODE -ne 0){throw 'Run history test compilation failed'}

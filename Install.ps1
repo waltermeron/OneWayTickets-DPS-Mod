@@ -71,7 +71,7 @@ try{
     if($CheckOnly){Write-Output 'v1.2 migration check passed. No install files changed.';return}
     Assert-GameClosed
     foreach($n in $inputs.Keys){if((Get-FileHash -LiteralPath (Join-Path $managed $n)).Hash -ne $inputs[$n]){throw 'Game files changed during validation. Retry after Steam finishes.'}}
-    $next=[ordered]@{version='1.2.0';loadingMode='bepinex-memory';loader='BepInEx 5.4.23.6 x64';gameDataDirectory=$game.DataName;gameExecutable=[IO.Path]::GetFileName($game.Executable);installedAt=[DateTimeOffset]::Now.ToString('o');speaker=$withSpeaker;files=[ordered]@{};originalGameFiles=[ordered]@{}}
+    $next=[ordered]@{version='1.3.0';loadingMode='bepinex-memory';loader='BepInEx 5.4.23.6 x64';gameDataDirectory=$game.DataName;gameExecutable=[IO.Path]::GetFileName($game.Executable);installedAt=[DateTimeOffset]::Now.ToString('o');speaker=$withSpeaker;files=[ordered]@{};originalGameFiles=[ordered]@{}}
     foreach($change in $changes){if(!$change.Delete){$relative=$change.To.Substring($root.Length+1);if(!$relative.StartsWith($game.DataName+'\')){$next.files[$relative]=(Get-FileHash -LiteralPath $change.From).Hash}}}
     foreach($n in @('World.dll','Commons.dll','Camp.dll')){if(Test-Path -LiteralPath (Join-Path $work ('Managed/'+$n))){$next.originalGameFiles[$n]=(Get-FileHash -LiteralPath (Join-Path $work ('Managed/'+$n))).Hash}}
     $next|ConvertTo-Json -Depth 10|Set-Content -LiteralPath (Join-Path $work 'installed.json') -Encoding UTF8
@@ -96,7 +96,7 @@ try{
     }catch{
         foreach($change in $changes){if($change.Existed){if(!(Test-Path -LiteralPath $change.To) -or (Get-FileHash -LiteralPath $change.Backup).Hash -ne (Get-FileHash -LiteralPath $change.To).Hash){Copy-Item -LiteralPath $change.Backup -Destination $change.To -Force}}elseif(Test-Path -LiteralPath $change.To){Remove-Item -LiteralPath $change.To -Force}};throw
     }
-    Write-Output ('Installed DPS v1.2.0 via BepInEx. Game DLLs restored to clean originals; future launches patch memory only. Speaker='+$withSpeaker)
+    Write-Output ('Installed DPS v1.3.0 via BepInEx. Game DLLs restored to clean originals; future launches patch memory only. Speaker='+$withSpeaker)
     Write-Output ('Rollback snapshot: '+$snapshot)
 }finally{
     $base=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'build')).TrimEnd('\')+'\';$absolute=[IO.Path]::GetFullPath($work)
